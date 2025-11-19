@@ -3,9 +3,7 @@
   const ctx = canvas.getContext('2d');
   const scoreEl = document.getElementById('score');
   const promo = document.getElementById('promo');
-  const gameOver = document.getElementById('gameOver');
   const playAgainBtn = document.getElementById('playAgain');
-  const retryBtn = document.getElementById('retry');
   const restartBtn = document.getElementById('restart');
 
   const DESIGN_WIDTH = 360;
@@ -21,7 +19,7 @@
     targetX: null,
   };
 
-  const items = [];
+  const coins = [];
   let score = 0;
   let lastTime = 0;
   let spawnTimer = 0;
@@ -33,15 +31,11 @@
   const gradients = {
     coin: ctx.createLinearGradient(0, 0, 0, 20),
     sky: ctx.createRadialGradient(DESIGN_WIDTH / 2, DESIGN_HEIGHT * 0.18, 10, DESIGN_WIDTH / 2, DESIGN_HEIGHT * 0.18, DESIGN_WIDTH / 1.2),
-    bomb: ctx.createLinearGradient(0, 0, 0, 20),
   };
 
   gradients.coin.addColorStop(0, '#fff26a');
   gradients.coin.addColorStop(0.5, '#f7e952');
   gradients.coin.addColorStop(1, '#d9c13b');
-
-  gradients.bomb.addColorStop(0, '#ff7b7b');
-  gradients.bomb.addColorStop(1, '#c92a2a');
 
   gradients.sky.addColorStop(0, 'rgba(114, 211, 255, 0.2)');
   gradients.sky.addColorStop(1, 'rgba(10, 18, 34, 0)');
@@ -58,22 +52,20 @@
   }
 
   function resetGame() {
-    items.length = 0;
+    coins.length = 0;
     score = 0;
     scoreEl.textContent = score;
     spawnTimer = 0;
     playing = true;
     promo.classList.remove('visible');
-    gameOver.classList.remove('visible');
     player.x = DESIGN_WIDTH / 2;
   }
 
-  function spawnItem() {
+  function spawnCoin() {
     const size = 20;
     const x = 10 + Math.random() * (DESIGN_WIDTH - size - 20);
     const speed = 120 + Math.random() * 80 + score * 6;
-    const isBomb = Math.random() < 0.22;
-    items.push({ x, y: -size, size, speed, type: isBomb ? 'bomb' : 'coin' });
+    coins.push({ x, y: -size, size, speed });
   }
 
   function movePlayer(dt) {
@@ -108,46 +100,37 @@
     player.x = Math.max(half, Math.min(DESIGN_WIDTH - half, player.x));
   }
 
-  function updateItems(dt) {
-    for (let i = items.length - 1; i >= 0; i -= 1) {
-      const item = items[i];
-      item.y += item.speed * dt;
+  function updateCoins(dt) {
+    for (let i = coins.length - 1; i >= 0; i -= 1) {
+      const c = coins[i];
+      c.y += c.speed * dt;
 
-      if (checkCollision(item)) {
-        if (item.type === 'coin') {
-          score += 1;
-          scoreEl.textContent = score;
-          if (score >= 10) winGame();
-        } else {
-          loseGame();
-        }
-        items.splice(i, 1);
+      if (checkCollision(c)) {
+        coins.splice(i, 1);
+        score += 1;
+        scoreEl.textContent = score;
+        if (score >= 10) endGame();
         continue;
       }
 
-      if (item.y > DESIGN_HEIGHT + 40) items.splice(i, 1);
+      if (c.y > DESIGN_HEIGHT + 40) coins.splice(i, 1);
     }
   }
 
-  function checkCollision(item) {
+  function checkCollision(coin) {
     const halfW = player.width / 2;
     const halfH = player.height / 2;
     return (
-      item.x + item.size > player.x - halfW &&
-      item.x < player.x + halfW &&
-      item.y + item.size > player.y - halfH &&
-      item.y < player.y + halfH
+      coin.x + coin.size > player.x - halfW &&
+      coin.x < player.x + halfW &&
+      coin.y + coin.size > player.y - halfH &&
+      coin.y < player.y + halfH
     );
   }
 
-  function winGame() {
+  function endGame() {
     playing = false;
     promo.classList.add('visible');
-  }
-
-  function loseGame() {
-    playing = false;
-    gameOver.classList.add('visible');
   }
 
   function drawBackground() {
@@ -205,35 +188,11 @@
     ctx.restore();
   }
 
-  function drawBomb(bomb) {
-    const { x, y, size } = bomb;
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.fillStyle = gradients.bomb;
-    ctx.strokeStyle = '#1a0b0b';
-    ctx.lineWidth = 2.5;
-
-    ctx.beginPath();
-    ctx.roundRect(0, 0, size, size, 6);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = '#0a1120';
-    ctx.font = 'bold 12px "Press Start 2P", monospace';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('X', size / 2, size / 2 + 0.5);
-    ctx.restore();
-  }
-
   function draw() {
     ctx.clearRect(0, 0, DESIGN_WIDTH, DESIGN_HEIGHT);
     drawBackground();
 
-    items.forEach((item) => {
-      if (item.type === 'coin') drawCoin(item);
-      else drawBomb(item);
-    });
+    coins.forEach(drawCoin);
     drawPlayer();
   }
 
@@ -244,13 +203,13 @@
     if (playing) {
       spawnTimer += dt;
       if (spawnTimer > 0.9) {
-        spawnItem();
+        spawnCoin();
         spawnTimer = 0;
       }
       applyKeyboard(dt);
       movePlayer(dt);
       clampPlayer();
-      updateItems(dt);
+      updateCoins(dt);
     }
 
     draw();
@@ -276,7 +235,6 @@
 
   restartBtn.addEventListener('click', resetGame);
   playAgainBtn.addEventListener('click', resetGame);
-  retryBtn.addEventListener('click', resetGame);
 
   window.addEventListener('resize', resizeCanvas);
 
