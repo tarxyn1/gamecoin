@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Catch the Coin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="top-bar">
+      <div class="title-block">
+        <p class="eyebrow">Мини-игра</p>
+        <h1>Catch the Coin</h1>
+        <p class="subtitle">Двигай кошелёк, лови пиксельные USDT и забирай промокод.</p>
+      </div>
+      <div class="scoreboard">
+        <div class="score">Монетки: <span id="score">0</span>/10</div>
+        <button id="restart" type="button" aria-label="Начать заново">↻</button>
+      </div>
+    </header>
+
+    <section class="game-wrapper">
+      <div class="overlay" id="promo">
+        <div class="promo-card">
+          <p class="promo-label">Промокод готов!</p>
+          <div class="promo-code" id="promoCode">USDT-10WIN</div>
+          <p class="promo-subtext">Скопируй и примени в Mini App.</p>
+          <button id="playAgain" type="button">Сыграть ещё</button>
+        </div>
+      </div>
+      <div class="overlay" id="gameOver">
+        <div class="promo-card">
+          <p class="promo-label">Ой, бомба!</p>
+          <div class="promo-code">Игра окончена</div>
+          <p class="promo-subtext">Избегай ловушек и попробуй ещё раз.</p>
+          <button id="retry" type="button">Попробовать снова</button>
+        </div>
+      </div>
+      <canvas id="gameCanvas" role="img" aria-label="Игровое поле с падающими монетами"></canvas>
+      <div class="hint">
+        <p>Наводи пальцем/мышью или нажимай ← →, чтобы двигать кошелёк.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
