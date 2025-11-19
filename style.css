@@ -1,0 +1,194 @@
+:root {
+  --bg: #0b1222;
+  --panel: #11182c;
+  --panel-2: #0d1425;
+  --accent: #8ef5c9;
+  --accent-2: #72d3ff;
+  --coin: #f7e952;
+  --coin-edge: #c3aa29;
+  --text: #e6eefc;
+  --muted: #9fb1d3;
+  --shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, #15203a, var(--bg) 45%);
+  font-family: var(--font);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.app-shell {
+  width: min(480px, 100%);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.top-bar {
+  padding: 16px 16px 8px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-block h1 {
+  margin: 4px 0;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.subtitle.danger {
+  color: #ffb3b3;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+button {
+  font-family: var(--font);
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0a1325;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+#restart {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.game-wrapper {
+  position: relative;
+  padding: 0 16px 16px;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  background: radial-gradient(circle at 50% 20%, rgba(114, 211, 255, 0.1), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(142, 245, 201, 0.12), transparent 40%),
+    #0a1222;
+  border-radius: 14px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.hint {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 8px 16px 0;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 18, 34, 0.75);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  border-radius: 12px;
+}
+
+.overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.promo-card {
+  background: rgba(17, 24, 44, 0.9);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+  text-align: center;
+  width: min(320px, 90%);
+}
+
+.promo-label {
+  margin: 0 0 6px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.promo-code {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 6px 0 10px;
+  color: var(--accent);
+}
+
+.promo-subtext {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+@media (max-width: 420px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .scoreboard {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
