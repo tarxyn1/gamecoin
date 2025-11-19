@@ -13,6 +13,7 @@
         <p class="eyebrow">Мини-игра</p>
         <h1>Catch the Coin</h1>
         <p class="subtitle">Двигай кошелёк, лови пиксельные USDT и забирай промокод.</p>
+        <p class="subtitle danger">Но избегай красные бомбы — поймаешь и партия закончена.</p>
       </div>
       <div class="scoreboard">
         <div class="score">Монетки: <span id="score">0</span>/10</div>
@@ -27,6 +28,14 @@
           <div class="promo-code" id="promoCode">USDT-10WIN</div>
           <p class="promo-subtext">Скопируй и примени в Mini App.</p>
           <button id="playAgain" type="button">Сыграть ещё</button>
+        </div>
+      </div>
+      <div class="overlay" id="gameOver">
+        <div class="promo-card">
+          <p class="promo-label">Ой, бомба!</p>
+          <div class="promo-code">Игра окончена</div>
+          <p class="promo-subtext">Избегай ловушек и попробуй ещё раз.</p>
+          <button id="retry" type="button">Попробовать снова</button>
         </div>
       </div>
       <canvas id="gameCanvas" role="img" aria-label="Игровое поле с падающими монетами"></canvas>

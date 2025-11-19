@@ -66,6 +66,10 @@ body {
   font-size: 13px;
 }
 
+.subtitle.danger {
+  color: #ffb3b3;
+}
+
 .scoreboard {
   display: flex;
   align-items: center;
