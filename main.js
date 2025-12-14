@@ -44,8 +44,8 @@
   gradients.bomb.addColorStop(0, '#ff7b7b');
   gradients.bomb.addColorStop(1, '#c92a2a');
 
-  gradients.sky.addColorStop(0, 'rgba(114, 211, 255, 0.2)');
-  gradients.sky.addColorStop(1, 'rgba(10, 18, 34, 0)');
+  gradients.sky.addColorStop(0, 'rgba(93, 214, 255, 0.2)');
+  gradients.sky.addColorStop(1, 'rgba(10, 17, 28, 0)');
 
   function resizeCanvas() {
     deviceScale = window.devicePixelRatio || 1;
@@ -170,7 +170,7 @@
     }
     ctx.setLineDash([]);
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+    ctx.fillStyle = 'rgba(148, 168, 197, 0.9)';
     ctx.font = '600 13px "Inter", sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText('Лови монетки, избегай красные бомбы!', 16, 26);
@@ -181,8 +181,8 @@
     const left = x - width / 2;
     const top = y - height / 2;
 
-    ctx.fillStyle = '#0e223a';
-    ctx.strokeStyle = 'rgba(114, 211, 255, 0.5)';
+    ctx.fillStyle = '#0f1b2c';
+    ctx.strokeStyle = 'rgba(125, 243, 92, 0.45)';
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.roundRect(left, top, width, height, 8);
